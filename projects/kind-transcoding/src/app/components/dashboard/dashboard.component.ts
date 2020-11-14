@@ -31,10 +31,6 @@ export class DashboardComponent implements OnInit {
             secondCtrl: ['', Validators.required],
         });
 
-        setTimeout(()=> {
-            // this.listenToOutputBucket()
-            this.downloadTranscodedFile()
-        }, 4000)
     }
 
     onFileSelected($event: Event): void {
@@ -60,6 +56,7 @@ export class DashboardComponent implements OnInit {
                         this.htmlFileForUpload = undefined;
                         this.s3Payload = { S3BucketName: '', contentType: '', key: '' };
                         this.firstFormGroup.patchValue({ fileCtrl: '' });
+
                         this.listenToOutputBucket();
                     }, // Handle the success response object
                 )
@@ -68,6 +65,7 @@ export class DashboardComponent implements OnInit {
                         console.log(error);
                         this.htmlFileForUpload = undefined;
                         this.s3Payload = { S3BucketName: '', contentType: '', key: '' };
+                        this.resetStepper()
                     }, // Handle the error response object
                 );
         };
@@ -80,6 +78,7 @@ export class DashboardComponent implements OnInit {
     resetStepper(): void {
         this.myStepper.reset();
         this.firstFormGroup.patchValue({ fileCtrl: '' });
+        this.fileName = undefined;
     }
 
     private prepareUploadPayload(file: any): void {
@@ -100,27 +99,36 @@ export class DashboardComponent implements OnInit {
     private listenToOutputBucket(): void {
         console.log('File Uploaded, listen to output bucket');
 
-        //TRANSCODED-Depoimentos.mp4
+        const checkFilePresence = () => {
+            this.backend.confirmBucketPresence({
+                bucket: 'kind-media-transcoding-output',
+                fileName: this.fileName
+            }).then((exists) => {
+                if (!exists) {return false;}
+                if (this.bucketListenerInterval) {
+                    clearInterval(this.bucketListenerInterval);
+                }
 
-        this.backend.confirmBucketPresence({
-            bucket: 'kind-media-transcoding-output',
-            fileName: 'TRANSCODED-Depoimentos.mp4'
-        }).then((exists) => {
-            console.log('this.backend.confirmBucketPresence({', exists);
-        }, (error) => {
-            console.log('error', error);
-        })
+                this.myStepper.next();
+                this.downloadTranscodedFile();
+            }, (error) => {
+                console.log('error', error);
+            })
+        }
 
-        // setTimeout(() => {
-        //     this.myStepper.next();
-        // }, 4000);
+        this.bucketListenerInterval = setInterval(() => {
+            checkFilePresence();
+        }, 20000);
+
+        checkFilePresence();
     }
 
     private downloadTranscodedFile() {
         // Reset fileName after this is done
-        this.backend.getS3PreSignedUrlDownload({ S3BucketName: 'kind-media-transcoding-output', key: 'TRANSCODED-Depoimentos.mp4' })
+        this.backend.getS3PreSignedUrlDownload({ S3BucketName: 'kind-media-transcoding-output', key: this.fileName })
         .then((url) => {
-            console.log('Presigned download url is ', url);
+            this.directDownloadLink = url;
+            window.location.replace(url);
         })
     }
 
