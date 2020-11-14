@@ -51,4 +51,4 @@ Thumbs.db
 
 .idea
 
-functions/index.js
+functions/.env.js
