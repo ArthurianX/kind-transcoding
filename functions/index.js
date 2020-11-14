@@ -59,8 +59,6 @@ exports.getS3SignedUrlDownload = functions.https.onCall((data, context) => {
         Bucket: data.S3BucketName,
         Key: data.key,
         Expires: 600, // Expires in 10 minutes
-        ACL: 'public-read', // Could be something else
-        ServerSideEncryption: 'AES256',
     };
 
     return s3.getSignedUrl('getObject', s3Params);

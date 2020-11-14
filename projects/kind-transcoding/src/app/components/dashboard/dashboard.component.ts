@@ -30,6 +30,11 @@ export class DashboardComponent implements OnInit {
         this.secondFormGroup = this._formBuilder.group({
             secondCtrl: ['', Validators.required],
         });
+
+        setTimeout(()=> {
+            // this.listenToOutputBucket()
+            this.downloadTranscodedFile()
+        }, 4000)
     }
 
     onFileSelected($event: Event): void {
@@ -94,12 +99,29 @@ export class DashboardComponent implements OnInit {
 
     private listenToOutputBucket(): void {
         console.log('File Uploaded, listen to output bucket');
+
+        //TRANSCODED-Depoimentos.mp4
+
+        this.backend.confirmBucketPresence({
+            bucket: 'kind-media-transcoding-output',
+            fileName: 'TRANSCODED-Depoimentos.mp4'
+        }).then((exists) => {
+            console.log('this.backend.confirmBucketPresence({', exists);
+        }, (error) => {
+            console.log('error', error);
+        })
+
         // setTimeout(() => {
         //     this.myStepper.next();
         // }, 4000);
     }
 
-    private downloadTranscodedFile(url) {
+    private downloadTranscodedFile() {
         // Reset fileName after this is done
+        this.backend.getS3PreSignedUrlDownload({ S3BucketName: 'kind-media-transcoding-output', key: 'TRANSCODED-Depoimentos.mp4' })
+        .then((url) => {
+            console.log('Presigned download url is ', url);
+        })
     }
+
 }

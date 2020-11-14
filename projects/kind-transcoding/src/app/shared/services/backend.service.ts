@@ -94,4 +94,42 @@ export class BackendService {
             });
         });
     }
+
+    public getS3PreSignedUrlDownload(data): Promise<any> {
+        return new Promise((resolve, reject) => {
+            this.afAuth.authState.subscribe((user) => {
+                if (user) {
+                    console.log('this.afFunc', this.afFunc);
+                    const getUrl = this.afFunc.httpsCallable('getS3SignedUrlDownload');
+                    getUrl(data).subscribe(
+                        (url) => {
+                            resolve(url);
+                        },
+                        (error) => {
+                            reject(false);
+                        },
+                    );
+                }
+            });
+        });
+    }
+
+    public confirmBucketPresence(data): Promise<any> {
+        return new Promise((resolve, reject) => {
+            this.afAuth.authState.subscribe((user) => {
+                if (user) {
+                    console.log('this.afFunc', this.afFunc);
+                    const getUrl = this.afFunc.httpsCallable('searchOutputBucketForFile');
+                    getUrl(data).subscribe(
+                        (exists) => {
+                            resolve(exists);
+                        },
+                        (error) => {
+                            reject(error);
+                        },
+                    );
+                }
+            });
+        });
+    }
 }
