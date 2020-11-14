@@ -1,0 +1,8 @@
+<div fxFill fxLayout="column" class="kind-transcoding-app">
+  <div fxLayout="column" fxFlex="25" fxFill>
+      <div style="width: 100%" fxLayoutAlign="center center">
+          <img src="/assets/kind-logo.png" width="120">
+      </div>
+  </div>
+  <div class="content" fxFlex="75" fxFill><router-outlet (activate)="routerActivates($event)"></router-outlet></div>
+</div>

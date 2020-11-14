@@ -1,0 +1,26 @@
+/*
+  This is a "Solution Style" tsconfig.json file, and is used by editors and TypeScript’s language server to improve development experience.
+  It is not intended to be used to perform a compilation.
+
+  To learn more about this file see: https://angular.io/config/solution-tsconfig.
+*/
+{
+  "files": [],
+  "references": [
+    {
+      "path": "./projects/kind-transcoding/tsconfig.app.json"
+    },
+    {
+      "path": "./projects/kind-transcoding/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/kind-transcoding/e2e/tsconfig.json"
+    },
+    {
+      "path": "./projects/form-factory-ui/tsconfig.lib.json"
+    },
+    {
+      "path": "./projects/form-factory-ui/tsconfig.spec.json"
+    }
+]
+}

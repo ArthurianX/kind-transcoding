@@ -1,0 +1,192 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "kind-transcoding": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "sass"
+        }
+      },
+      "root": "projects/kind-transcoding",
+      "sourceRoot": "projects/kind-transcoding/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/kind-transcoding",
+            "index": "projects/kind-transcoding/src/index.html",
+            "main": "projects/kind-transcoding/src/main.ts",
+            "polyfills": "projects/kind-transcoding/src/polyfills.ts",
+            "tsConfig": "projects/kind-transcoding/tsconfig.app.json",
+            "aot": true,
+            "assets": [
+              "projects/kind-transcoding/src/favicon.ico",
+              "projects/kind-transcoding/src/assets",
+              {
+                "glob": "**/*",
+                "input": "./shared-assets",
+                "output": "./assets"
+              }
+            ],
+            "styles": [
+              "projects/kind-transcoding/src/styles.scss"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "projects/kind-transcoding/src/environments/environment.ts",
+                  "with": "projects/kind-transcoding/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "kind-transcoding:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "kind-transcoding:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "kind-transcoding:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/kind-transcoding/src/test.ts",
+            "polyfills": "projects/kind-transcoding/src/polyfills.ts",
+            "tsConfig": "projects/kind-transcoding/tsconfig.spec.json",
+            "karmaConfig": "projects/kind-transcoding/karma.conf.js",
+            "assets": [
+              "projects/kind-transcoding/src/favicon.ico",
+              "projects/kind-transcoding/src/assets",
+              {
+                "glob": "**/*",
+                "input": "./shared-assets",
+                "output": "./assets"
+              }
+            ],
+            "styles": [
+              "projects/kind-transcoding/src/styles.scss"
+            ],
+            "scripts": []
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/kind-transcoding/tsconfig.app.json",
+              "projects/kind-transcoding/tsconfig.spec.json",
+              "projects/kind-transcoding/e2e/tsconfig.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        },
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "projects/kind-transcoding/e2e/protractor.conf.js",
+            "devServerTarget": "kind-transcoding:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "kind-transcoding:serve:production"
+            }
+          }
+        }
+      }
+    },
+    "form-factory-ui": {
+      "projectType": "library",
+      "root": "projects/form-factory-ui",
+      "sourceRoot": "projects/form-factory-ui/src",
+      "prefix": "ffui",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/form-factory-ui/tsconfig.lib.json",
+            "project": "projects/form-factory-ui/ng-package.json",
+            "assets": [{
+                "glob": "**/*",
+                "input": "./shared-assets",
+                "output": "./assets"
+              }]
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/form-factory-ui/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/form-factory-ui/src/test.ts",
+            "tsConfig": "projects/form-factory-ui/tsconfig.spec.json",
+            "karmaConfig": "projects/form-factory-ui/karma.conf.js",
+            "assets": [{
+              "glob": "**/*",
+              "input": "./shared-assets",
+              "output": "./assets"
+            }]
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/form-factory-ui/tsconfig.lib.json",
+              "projects/form-factory-ui/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "defaultProject": "kind-transcoding",
+  "cli": {
+    "analytics": "a068fa0b-4aa4-4c8d-b0c3-a6303093d10a"
+  }
+}

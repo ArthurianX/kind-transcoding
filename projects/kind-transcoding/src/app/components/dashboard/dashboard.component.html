@@ -1,0 +1,33 @@
+<div fxFlexFill>
+    <mat-horizontal-stepper [linear]="true" id="stepper" #stepper>
+        <mat-step [stepControl]="firstFormGroup">
+            <form [formGroup]="firstFormGroup" (submit)="startFileUpload()" >
+                <ng-template matStepLabel>Select file you want converted</ng-template>
+                <div fxLayoutAlign="center center" style="margin: 30px 0; text-align: center">
+                    <mat-form-field>
+                        <mat-label>Name</mat-label>
+                        <input [disabled]="true" type="text" matInput placeholder="Video file" formControlName="fileCtrl" required>
+                    </mat-form-field>
+                    <button type="button" mat-raised-button (click)="fileInput.click()">Choose File</button>
+                    <input hidden (change)="onFileSelected($event)" #fileInput type="file" id="file">
+                </div>
+                <div style="display: block; margin-top: 30px" fxLayoutAlign="end center">
+                    <button [disabled]="firstFormGroup.value.fileCtrl && firstFormGroup.value.fileCtrl.length == 0" color="accent" mat-raised-button matStepperNext><mat-icon>publish</mat-icon> Upload</button>
+                </div>
+            </form>
+        </mat-step>
+        <mat-step label="Waiting for file conversion">
+            <div style="margin: 60px 0">
+                <mat-progress-bar color="accent" [mode]="'indeterminate'"></mat-progress-bar>
+            </div>
+        </mat-step>
+        <mat-step>
+            <ng-template matStepLabel>Done</ng-template>
+            <p style="margin: 30px 0; text-align: center" fxLayoutAlign="center center">Conversion is now done. File should start downloading! <mat-icon>get_app</mat-icon></p>
+            <p style="margin: 6px 0; text-align: center" fxLayoutAlign="center center"><a [href]="directDownloadLink">(Click here if downloads isn't starting)</a> </p>
+            <div>
+                <button mat-raised-button (click)="resetStepper()">Another one!</button>
+            </div>
+        </mat-step>
+    </mat-horizontal-stepper>
+</div>
