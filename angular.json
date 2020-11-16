@@ -25,6 +25,8 @@
             "aot": true,
             "assets": [
               "projects/kind-transcoding/src/favicon.ico",
+              "projects/kind-transcoding/src/browserconfig.xml",
+              "projects/kind-transcoding/src/manifest.json",
               "projects/kind-transcoding/src/assets",
               {
                 "glob": "**/*",
