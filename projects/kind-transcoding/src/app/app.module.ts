@@ -26,6 +26,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { BadUserComponent } from 'projects/kind-transcoding/src/app/components/bad-user/bad-user.component';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
     declarations: [AppComponent, SignInComponent, DashboardComponent, BadUserComponent],
@@ -60,6 +61,7 @@ import { BadUserComponent } from 'projects/kind-transcoding/src/app/components/b
         MatNativeDateModule,
         MatStepperModule,
         MatProgressBarModule,
+        MatTooltipModule,
     ],
     providers: [AuthService],
     bootstrap: [AppComponent],

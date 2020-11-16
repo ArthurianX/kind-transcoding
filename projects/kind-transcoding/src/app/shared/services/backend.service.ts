@@ -80,7 +80,6 @@ export class BackendService {
         return new Promise((resolve, reject) => {
             this.afAuth.authState.subscribe((user) => {
                 if (user) {
-                    console.log('this.afFunc', this.afFunc);
                     const getUrl = this.afFunc.httpsCallable('getS3SignedUrlUpload');
                     getUrl(data).subscribe(
                         (url) => {
@@ -99,7 +98,6 @@ export class BackendService {
         return new Promise((resolve, reject) => {
             this.afAuth.authState.subscribe((user) => {
                 if (user) {
-                    console.log('this.afFunc', this.afFunc);
                     const getUrl = this.afFunc.httpsCallable('getS3SignedUrlDownload');
                     getUrl(data).subscribe(
                         (url) => {
@@ -118,7 +116,6 @@ export class BackendService {
         return new Promise((resolve, reject) => {
             this.afAuth.authState.subscribe((user) => {
                 if (user) {
-                    console.log('this.afFunc', this.afFunc);
                     const getUrl = this.afFunc.httpsCallable('searchOutputBucketForFile');
                     getUrl(data).subscribe(
                         (exists) => {

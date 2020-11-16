@@ -18,16 +18,19 @@
         </mat-step>
         <mat-step label="Waiting for file conversion">
             <div style="margin: 60px 0">
+                <p style="text-align: center">Can take between 1-15min. Do not close window, we won't be able to find the converted file.</p>
                 <mat-progress-bar color="accent" [mode]="'indeterminate'"></mat-progress-bar>
             </div>
         </mat-step>
         <mat-step>
             <ng-template matStepLabel>Done</ng-template>
             <p style="margin: 30px 0; text-align: center" fxLayoutAlign="center center">Conversion is now done. File should start downloading! <mat-icon>get_app</mat-icon></p>
-            <p style="margin: 6px 0; text-align: center" fxLayoutAlign="center center"><a [href]="directDownloadLink">(Click here if downloads isn't starting)</a> </p>
+            <p style="margin: 6px 0; text-align: center" fxLayoutAlign="center center"><a [href]="directDownloadLink">(Click here if download hasn't started)</a> </p>
             <div>
                 <button mat-raised-button (click)="resetStepper()">Another one!</button>
             </div>
         </mat-step>
     </mat-horizontal-stepper>
+
+    <button matTooltip="Logout" matTooltipPosition="left" style="position: absolute; top: 20px; right: 5px" mat-flat-button (click)="logout()"><mat-icon>exit_to_app</mat-icon></button>
 </div>
